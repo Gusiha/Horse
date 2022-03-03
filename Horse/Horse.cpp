@@ -32,14 +32,6 @@ int step[8][2] = {
 };
 int turnNumber = 0;
 
-int angelMove(int newX, int newY)
-    {
-        if (angelTable[newX][newY] != 0)
-            return (angelTable[newX][newY]);
-        else
-            return 0;
-    }
-
 bool Check(int first, int second)
 {   // go behind the border
     if ((first < 0) || (second < 0) || (first >= RC) || (second >= RC))
@@ -51,7 +43,6 @@ bool Check(int first, int second)
 
     return true;
 }
-
 
 bool setKnight(int x, int y)
 {
@@ -132,35 +123,6 @@ bool setKnight(int x, int y)
     board[x][y] = 0;
     return false;
   
-        
-  
-
-    /*int angelPoss = angelMove(x, y);*/
-
-    // recursive exit
-    
-
-
-
-    // changing turn in the angel
-    /*if (angelPoss && board[step[angelPoss - 1][0], step[angelPoss - 1][1]] == 0)
-    {
-
-        setKnight(x + step[angelPoss-1][0], y + step[angelPoss-1][1]);
-        return true;
-    }*/
-
-    //else
-    //{
-
-        /*for (int i = 0; i < 8; i++)
-        {
-            if (setKnight(x + step[i][0], y + step[i][1]))
-                return true;
-        }*/
-
-    //}
-
    
 }
 
@@ -185,16 +147,6 @@ void printAngeTable()
             cout << angelTable[i][j] << " ";
         }
         cout << endl;
-    }
-}
-
-int iterations(int a, int b)
-{
-    int count = 0;
-    for (int m = 0; m < 8; m++)
-    {
-        if (iterations(a + step[m][0], b + step[m][1]))
-            return true;
     }
 }
 
@@ -230,7 +182,6 @@ int main()
 
     angelTable[2][1] = 7;
     angelTable[1][2] = 8;
-
 
 
     printAngeTable();
