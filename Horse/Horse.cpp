@@ -138,17 +138,6 @@ void printBoard()
     }
 }
 
-void printAngeTable()
-{
-    for (int i = 0; i < RC; i++)
-    {
-        for (int j = 0; j < RC; j++)
-        {
-            cout << angelTable[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
 
 //Варнсдорф
 int Predict(int newX, int newY)
@@ -169,23 +158,7 @@ int main()
 {
     setlocale(LC_ALL, "ru");
     time_t timeStart, timeFinish;
-    
-    //filling angelTable
-    angelTable [1][RC - 3] = 1;
-    angelTable [2][RC - 2] = 2;
 
-    angelTable [RC - 3][RC - 2] = 3;
-    angelTable [RC - 2][RC - 3] = 4;
-
-    angelTable [RC - 2][2] = 5;
-    angelTable [RC - 3][1] = 6;
-
-    angelTable[2][1] = 7;
-    angelTable[1][2] = 8;
-
-
-    printAngeTable();
-    
     cout << endl;
 
     time(&timeStart);
