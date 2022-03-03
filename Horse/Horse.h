@@ -1,12 +1,12 @@
 #include <iostream>
 #include <ctime>
 
-//размерность доски
-#define RC 10
+// Board dimension
+#define RC 8
 
-//начальные координаты
-#define X 4 
-#define Y 4
+// Initial coordinates
+#define X 1
+#define Y 3
 
 using namespace std;
 
@@ -44,7 +44,6 @@ bool Check(int first, int second)
 
     return true;
 }
-
 void printBoard()
 {
     for (int i = 0; i < RC; i++)
@@ -56,7 +55,6 @@ void printBoard()
         cout << endl;
     }
 }
-
 bool setKnight(int x, int y)
 {
     for (int j = 0; j < 8; j++)
@@ -135,6 +133,7 @@ bool setKnight(int x, int y)
   
    
 }
+
 // Varnsdorf's Algorithm
 int Predict(int newX, int newY)
 {
