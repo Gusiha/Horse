@@ -6,11 +6,10 @@ int main()
     time_t timeStart, timeFinish;
 
     time(&timeStart);
-    setKnight(X,Y);
+    SetKnight(X,Y);
 
-    printBoard();
+    PrintBoard();
     time(&timeFinish);
-
     cout << "\nProcess time is " << timeFinish - timeStart << " sec.";
 }
 

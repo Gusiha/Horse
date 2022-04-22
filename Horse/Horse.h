@@ -1,12 +1,14 @@
 #include <iostream>
 #include <ctime>
+#include <iomanip> 
+
 
 // Board dimension
 #define RC 8
 
 // Initial coordinates
 #define X 1
-#define Y 3
+#define Y 0
 
 using namespace std;
 
@@ -27,9 +29,9 @@ int turnNumber = 0;
 
 
 // Function Prototypes
-void printBoard();
+void PrintBoard();
 bool Check(int first, int second);
-bool setKnight(int x, int y);
+bool SetKnight(int x, int y);
 int Predict(int newX, int newY);
 
 // Function Definitions
@@ -38,24 +40,25 @@ bool Check(int first, int second)
     if ((first < 0) || (second < 0) || (first >= RC) || (second >= RC))
         return false;
 
-    // pointed position before
+    // pointed position
     if (board[first][second] != 0)
         return false;
 
     return true;
 }
-void printBoard()
+void PrintBoard()
 {
     for (int i = 0; i < RC; i++)
     {
         for (int j = 0; j < RC; j++)
         {
-            cout << board[i][j] << " ";
+            cout << setw(4) << left << board[i][j] << " ";
+            
         }
         cout << endl;
     }
 }
-bool setKnight(int x, int y)
+bool SetKnight(int x, int y)
 {
     for (int j = 0; j < 8; j++)
     {
@@ -72,13 +75,13 @@ bool setKnight(int x, int y)
     }
 
     turnNumber++;
-    board[x][y] = turnNumber;
+    board[x][y] = turnNumber;      // cell pointing
 
     
 
     for (int i = 0; i < 8; i++)
     {
-        if (Check(x + step[i][0], y + step[i][1]) && turnNumber != 63)
+        if (Check(x + step[i][0], y + step[i][1]) && turnNumber != RC*RC-1)
         {
             predictCount[i] = Predict(x + step[i][0], y + step[i][1]);
         }
@@ -117,7 +120,7 @@ bool setKnight(int x, int y)
         if (i == 7 && min != 0)
         {
 
-            if (setKnight(x + step[min_id][0], y + step[min_id][1]))
+            if (SetKnight(x + step[min_id][0], y + step[min_id][1]))
                 return true;
             else
                 return false;
@@ -125,7 +128,7 @@ bool setKnight(int x, int y)
         
     }
     cout << endl;
-    printBoard();
+    PrintBoard();
 
     turnNumber--;
     board[x][y] = 0;
