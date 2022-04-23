@@ -10,6 +10,6 @@ int main()
 
     PrintBoard();
     time(&timeFinish);
-    cout << "\nProcess time is " << timeFinish - timeStart << " sec.";
+    cout << "\nProcess time is " << timeFinish - timeStart << " sec.\n";
 }
 

@@ -2,7 +2,6 @@
 #include <ctime>
 #include <iomanip> 
 
-
 // Board dimension
 #define RC 8
 
@@ -12,7 +11,7 @@
 
 using namespace std;
 
-//Global Variables
+// Global Variables
 int predictCount[8] = {};
 int board[RC][RC] = {};
 int step[8][2] = {
@@ -36,7 +35,8 @@ int Predict(int newX, int newY);
 
 // Function Definitions
 bool Check(int first, int second)
-{   // go behind the border
+{
+    // going beyond 
     if ((first < 0) || (second < 0) || (first >= RC) || (second >= RC))
         return false;
 
@@ -46,6 +46,7 @@ bool Check(int first, int second)
 
     return true;
 }
+
 void PrintBoard()
 {
     for (int i = 0; i < RC; i++)
@@ -58,8 +59,10 @@ void PrintBoard()
         cout << endl;
     }
 }
+
 bool SetKnight(int x, int y)
 {
+
     for (int j = 0; j < 8; j++)
     {
         predictCount[j] = 0;
@@ -75,9 +78,10 @@ bool SetKnight(int x, int y)
     }
 
     turnNumber++;
-    board[x][y] = turnNumber;      // cell pointing
-
     
+    // cell pointing
+    board[x][y] = turnNumber;      
+
 
     for (int i = 0; i < 8; i++)
     {
@@ -127,9 +131,10 @@ bool SetKnight(int x, int y)
         }
         
     }
+    
     cout << endl;
     PrintBoard();
-
+    
     turnNumber--;
     board[x][y] = 0;
     return false;
