@@ -3,11 +3,11 @@
 #include <iomanip> 
 
 // Board dimension
-#define RC 8
+#define RC 76
 
 // Initial coordinates
-#define X 1
-#define Y 0
+#define X 4
+#define Y 3
 
 using namespace std;
 
@@ -53,12 +53,15 @@ void PrintBoard()
     {
         for (int j = 0; j < RC; j++)
         {
-            cout << setw(4) << left << board[i][j] << " ";
+            cout << setw(5) << left << board[i][j];
             
         }
         cout << endl;
     }
 }
+
+
+
 
 bool SetKnight(int x, int y)
 {
@@ -69,6 +72,7 @@ bool SetKnight(int x, int y)
     }
 
     if (!Check(x, y))
+        
         return false;
 
 
@@ -79,16 +83,15 @@ bool SetKnight(int x, int y)
 
     turnNumber++;
     
-    // cell pointing
+    // Cell Pointing
     board[x][y] = turnNumber;      
 
 
     for (int i = 0; i < 8; i++)
     {
         // Switching off Varnsdorf
-         if (turnNumber == RC*RC-1)
+        if (turnNumber == RC*RC-1)
         {
-           
             for (int i = 0; i < 8; i++)
             {
                 if (Check(x + step[i][0], y + step[i][1]))
@@ -98,16 +101,14 @@ bool SetKnight(int x, int y)
                 }
                    
             }
-
             break;            
         }
         
+        // Common Varnsdorf's Filling
         if (Check(x + step[i][0], y + step[i][1]) )
         {
             predictCount[i] = Predict(x + step[i][0], y + step[i][1]);
-        }
-
-       
+        }  
         
     }
 
@@ -116,31 +117,29 @@ bool SetKnight(int x, int y)
 
     for (int i = 0; i < 8; i++)
     {
-        if ((predictCount[i] <= min) && predictCount[i] != 0)
+        if ((predictCount[i] < min) && predictCount[i] != 0)
         {
+            
             min = predictCount[i];
             min_id = i;
         }
-   
+
+
         if (i == 7 && min != 0)
         {
-
-            if (SetKnight(x + step[min_id][0], y + step[min_id][1]))
-                return true;
-            else
-                return false;
+            
+            if (!SetKnight(x + step[min_id][0], y + step[min_id][1]))
+            {
+                board[x + step[min_id][0]][y + step[min_id][1]] = 0;
+                turnNumber--;
+                predictCount[min_id] = 0;
+                SetKnight(x,y);
+            }
         }
         
     }
     
-    cout << endl;
-    PrintBoard();
-    
-    turnNumber--;
-    board[x][y] = 0;
-    return false;
-  
-   
+    return true;
 }
 
 // Varnsdorf's Algorithm
