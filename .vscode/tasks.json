@@ -7,7 +7,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/Horse/Horse.cpp",  
+                "${file}",  
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
