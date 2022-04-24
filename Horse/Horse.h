@@ -85,29 +85,30 @@ bool SetKnight(int x, int y)
 
     for (int i = 0; i < 8; i++)
     {
-        if (Check(x + step[i][0], y + step[i][1]) && turnNumber != RC*RC-1)
+        // Switching off Varnsdorf
+         if (turnNumber == RC*RC-1)
+        {
+           
+            for (int i = 0; i < 8; i++)
+            {
+                if (Check(x + step[i][0], y + step[i][1]))
+                {
+                   board[x + step[i][0]][y + step[i][1]] = RC * RC;
+
+                }
+                   
+            }
+
+            break;            
+        }
+        
+        if (Check(x + step[i][0], y + step[i][1]) )
         {
             predictCount[i] = Predict(x + step[i][0], y + step[i][1]);
         }
 
-        if (turnNumber == RC*RC-1)
-        {
-           
-            for (int k = 0; k < 8; k++)
-            {
-                if (Check(x + step[k][0], y + step[k][1]))
-                {
-                    board[x + step[k][0]][y + step[k][1]] = RC * RC;
-
-                }
-                    
-            }
-
-            
-            
-        }
+       
         
-
     }
 
     int min = 10;
