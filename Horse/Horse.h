@@ -30,7 +30,7 @@ int turnNumber = 0;
 // Function Prototypes
 void PrintBoard();
 bool Check(int first, int second);
-bool SetKnight(int x, int y);
+bool SetKnight(int x, int y, bool repeat = 0);
 int Predict(int newX, int newY);
 
 // Function Definitions
@@ -60,13 +60,8 @@ void PrintBoard()
     }
 }
 
-bool SetKnight(int x, int y)
+bool SetKnight(int x, int y, bool repeat = 0)
 {
-
-    for (int j = 0; j < 8; j++)
-    {
-        predictCount[j] = 0;
-    }
 
     if (!Check(x, y))
         return false;
@@ -78,11 +73,17 @@ bool SetKnight(int x, int y)
     }
 
     turnNumber++;
-    
     // cell pointing
-    board[x][y] = turnNumber;      
-
-
+    board[x][y] = turnNumber;
+    
+    if(!repeat)
+    {
+    
+    for (int j = 0; j < 8; j++)
+    {
+        predictCount[j] = 0;
+    }
+    
     for (int i = 0; i < 8; i++)
     {
         // Switching off Varnsdorf
@@ -110,9 +111,10 @@ bool SetKnight(int x, int y)
        
         
     }
+    }
 
     int min = 10;
-    int min_id = 0;
+    int min_id = -1;
 
     for (int i = 0; i < 8; i++)
     {
@@ -122,20 +124,24 @@ bool SetKnight(int x, int y)
             min_id = i;
         }
    
-        if (i == 7 && min != 0)
+        if (i == 7 && min > 0)
         {
 
-            if (SetKnight(x + step[min_id][0], y + step[min_id][1]))
-                return true;
+            // if (SetKnight(x + step[min_id][0], y + step[min_id][1]))
+            if (Check(x + step[min_id][0], y + step[min_id][1]))
+                SetKnight(x + step[min_id][0], y + step[min_id][1]);
             else
-                return false;
+            {
+                turnNumber--;
+                board[x][y] = 0;
+                predictCount[min_id] = 0;
+                SetKnight(x + step[min_id][0], y + step[min_id][1], true);
+            }
         }
         
+        return false;
     }
-    
-    cout << endl;
-    PrintBoard();
-    
+
     turnNumber--;
     board[x][y] = 0;
     return false;
