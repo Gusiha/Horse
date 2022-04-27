@@ -6,8 +6,8 @@
 #define RC 25
 
 // Initial coordinates
-#define X 1
-#define Y 0
+#define X 4
+#define Y 3
 
 using namespace std;
 
@@ -53,7 +53,7 @@ void PrintBoard()
     {
         for (int j = 0; j < RC; j++)
         {
-            cout << setw(4) << left << board[i][j] << " ";
+            cout << setw(5) << left << board[i][j];
             
         }
         cout << endl;
@@ -90,9 +90,8 @@ void SetKnight(int x, int y, bool repeat, int* backupArray)
     for (int i = 0; i < 8; i++)
     {
         // Switching off Varnsdorf
-         if (turnNumber == RC*RC-1)
+        if (turnNumber == RC*RC-1)
         {
-           
             for (int i = 0; i < 8; i++)
             {
                 if (Check(x + step[i][0], y + step[i][1]))
@@ -102,16 +101,14 @@ void SetKnight(int x, int y, bool repeat, int* backupArray)
                 }
                    
             }
-
             break;            
         }
         
+        // Common Varnsdorf's Filling
         if (Check(x + step[i][0], y + step[i][1]) )
         {
             predictCount[i] = Predict(x + step[i][0], y + step[i][1]);
-        }
-
-       
+        }  
         
     }
     }
@@ -121,8 +118,9 @@ void SetKnight(int x, int y, bool repeat, int* backupArray)
 
     for (int i = 0; i < 8; i++)
     {
-        if ((predictCount[i] <= min) && predictCount[i] != 0)
+        if ((predictCount[i] < min) && predictCount[i] != 0)
         {
+            
             min = predictCount[i];
             min_id = i;
         }
@@ -144,7 +142,6 @@ void SetKnight(int x, int y, bool repeat, int* backupArray)
         }
 
     }
-
 }
 
 // Varnsdorf's Algorithm
