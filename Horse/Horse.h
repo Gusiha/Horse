@@ -3,7 +3,7 @@
 #include <iomanip> 
 
 // Board dimension
-#define RC 8
+#define RC 25
 
 // Initial coordinates
 #define X 1
@@ -12,7 +12,7 @@
 using namespace std;
 
 // Global Variables
-int predictCount[8] = {};
+
 int board[RC][RC] = {};
 int step[8][2] = {
     {-1,2},
@@ -30,7 +30,7 @@ int turnNumber = 0;
 // Function Prototypes
 void PrintBoard();
 bool Check(int first, int second);
-bool SetKnight(int x, int y, bool repeat = 0);
+void SetKnight(int x, int y, bool repeat = false, int* predictCount = {});
 int Predict(int newX, int newY);
 
 // Function Definitions
@@ -60,16 +60,17 @@ void PrintBoard()
     }
 }
 
-bool SetKnight(int x, int y, bool repeat = 0)
+void SetKnight(int x, int y, bool repeat, int* backupArray)
 {
+    
 
     if (!Check(x, y))
-        return false;
+        return; 
 
 
     if (turnNumber == RC * RC)
     {
-        return true;
+        return;
     }
 
     turnNumber++;
@@ -78,12 +79,14 @@ bool SetKnight(int x, int y, bool repeat = 0)
     
     if(!repeat)
     {
+
+    int predictCount[8] = {};
     
     for (int j = 0; j < 8; j++)
     {
         predictCount[j] = 0;
     }
-    
+
     for (int i = 0; i < 8; i++)
     {
         // Switching off Varnsdorf
@@ -124,29 +127,24 @@ bool SetKnight(int x, int y, bool repeat = 0)
             min_id = i;
         }
    
-        if (i == 7 && min > 0)
+        if (i == 7 && min_id != -1)
         {
 
             // if (SetKnight(x + step[min_id][0], y + step[min_id][1]))
             if (Check(x + step[min_id][0], y + step[min_id][1]))
                 SetKnight(x + step[min_id][0], y + step[min_id][1]);
+             
             else
             {
                 turnNumber--;
                 board[x][y] = 0;
                 predictCount[min_id] = 0;
-                SetKnight(x + step[min_id][0], y + step[min_id][1], true);
+                SetKnight(x , y , true, predictCount);
             }
         }
-        
-        return false;
+
     }
 
-    turnNumber--;
-    board[x][y] = 0;
-    return false;
-  
-   
 }
 
 // Varnsdorf's Algorithm
