@@ -3,7 +3,7 @@
 #include <iomanip> 
 
 // Board dimension
-#define RC 25
+#define RC 8
 
 // Initial coordinates
 #define X 4
